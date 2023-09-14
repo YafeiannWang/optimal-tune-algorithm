@@ -221,9 +221,9 @@ def correction_component(result,node_number,first_order_samples,second_order_sam
 
 if __name__ == '__main__':
 
-    N = [10,20,25,30,40]#,50]#,60] #define the number of features
-    edges = [40,100,150,250,400]#,1000]#,1700] #define the number of edges on dag
-    path_type = ['generate_mixture_linear_node','generate_nonlinear_Gau_node','generate_linear_Gau_node']#'generate_mixture_squad_node',
+    N = [10]#,20,25,30,40]#,50]#,60] #define the number of features
+    edges = [40]#,100,150,250,400]#,1000]#,1700] #define the number of edges on dag
+    path_type = ['generate_sig_Gau_node']#'generate_mixture_linear_node','generate_nonlinear_Gau_node','generate_linear_Gau_node']#'generate_mixture_squad_node',
     #path_type = ['generate_mlp_node','generate_exp_node']
     #selected_type = path_type[0]
     time_record = []
@@ -237,29 +237,9 @@ if __name__ == '__main__':
                 samples = np.loadtxt(folder+sample_path,dtype='float',delimiter=',') #need to add further
                 nodes = samples.shape[1]
                 hsic_first_order = np.array(hsic_first_order_fun(samples,sample_path,folder))
-
                 time_start = time.time()
                 hsic_second_order = hsic_second_order_fun(samples,sample_path,folder)
                 result = optimal_component(hsic_first_order)
-                
                 result = correction_component(result,node_number,hsic_first_order,hsic_second_order)
-                time_end = time.time()
                 matrix_save_path = folder+'_'.join(selected_type.split('_')[1:3])+'_predict_matrix_OT_node'+str(node_number)+'_edge'+str(edge_number)+'.csv'
                 np.savetxt(matrix_save_path,result,delimiter=',')
-                matrix_path = folder+'relation_matrix_node'+str(node_number)+'_edge'+str(edge_number)+'.csv'
-                true_structure = nx.read_edgelist(path = matrix_path, create_using = nx.DiGraph,nodetype=int)
-                result = nx.from_numpy_array(result,create_using=nx.DiGraph)
-                #aupr_not,curve_not = precision_recall(true_structure,result)
-                #SHD_not = SHD(true_structure,result,double_for_anticausal=False)
-                #auc_data.append(aupr_not)
-                #shd_data.append(SHD_not)
-                time_record.append(time_end-time_start)
-                #print(aupr_not," ",SHD_not)
-        np.savetxt(folder+selected_type+'_OT_time_record.csv',time_record,delimiter=',')
-    #auc_data = pd.DataFrame(auc_data,columns = ['IT'])
-    #save_path = '_'.join(selected_type.split('_')[1:3])+'_IT_auc.csv'
-    #auc_data.to_csv(save_path)
-    #save_path ='_'.join(selected_type.split('_')[1:3])+'_IT_shd.csv'
-    #shd_data = pd.DataFrame(shd_data,columns = ['IT'])
-    #shd_data.to_csv(save_path)
-

@@ -115,14 +115,10 @@ def generate_mixture_linear(S,N,edge,top_sort,relation_matrix,i):
 
 if __name__ == "__main__":
 
-    #N = 10 #define the number of features
-    #edges = 40 #define the number of edges on dag
-    s_number = [100,400,600,900,1600,2500,3600] #define the number of samples
-    N = [10,20,25,30,40,50,60] #define the number of features
-    edges = [40,100,150,250,400,1000,1700] #define the number of edges on dag
-    path_type = ['generate_mixture_squad_node','generate_mixture_linear_node','generat_nonlinear_Gau_node','generate_linear_nonGau_node','generate_linear_Gau_node']
+    N = [10] #define the number of features
+    edges = [40] #define the number of edges on dag
     for i in range(10):
-        #os.mkdir('./'+str(i))
+        os.mkdir('./'+str(i))
         for node_number,edge_number,S in zip(N,edges,s_number):
             G = generate_graph(node_number,edge_number)
 
