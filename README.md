@@ -8,6 +8,7 @@ Clone the package.
 
 `git clone https://github.com/YafeiannWang/optimal-tune-algorithm.git`
 
-Run the OT.py file for an example.
+Run the generate_data.py file for generating sythetic data.
+Run the OT.py file for learning the estimated graph.
 ### Publication
 Wang Y, Liu J. Learning nonparametric DAGs with incremental information via high-order HSIC[J]. arXiv preprint arXiv:2308.05969, 2023.
