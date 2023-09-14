@@ -8,7 +8,7 @@ import tensorflow.compat.v1 as tf
 from cvxopt.solvers import qp
 from cvxopt import matrix
 import networkx as nx
-#from cdt.metrics import precision_recall,SHD
+from cdt.metrics import precision_recall,SID
 
 #function for calculating HSIC between variables X and Y
 def hsic(x,y):
@@ -103,7 +103,7 @@ def gumbel_softmax(logits, temperature, hard=True):
 #optimal phase of OT algorithm
 def optimal_component(first_order_samples):
     sess = tf.InteractiveSession()
-    tf.compat.v1.disable_eager_execution()
+    #tf.compat.v1.disable_eager_execution()
 
     Node = int(first_order_samples[0])
     first_order_samples = first_order_samples[1:].reshape(1,-1)
@@ -223,7 +223,7 @@ if __name__ == '__main__':
 
     N = [10]#,20,25,30,40]#,50]#,60] #define the number of features
     edges = [40]#,100,150,250,400]#,1000]#,1700] #define the number of edges on dag
-    path_type = ['generate_sig_Gau_node']#'generate_mixture_linear_node','generate_nonlinear_Gau_node','generate_linear_Gau_node']#'generate_mixture_squad_node',
+    path_type = ['generate_abs_Gau_node']#'generate_mixture_linear_node','generate_nonlinear_Gau_node','generate_linear_Gau_node']#'generate_mixture_squad_node',
     #path_type = ['generate_mlp_node','generate_exp_node']
     #selected_type = path_type[0]
     time_record = []
@@ -243,3 +243,9 @@ if __name__ == '__main__':
                 result = correction_component(result,node_number,hsic_first_order,hsic_second_order)
                 matrix_save_path = folder+'_'.join(selected_type.split('_')[1:3])+'_predict_matrix_OT_node'+str(node_number)+'_edge'+str(edge_number)+'.csv'
                 np.savetxt(matrix_save_path,result,delimiter=',')
+                matrix_path = './'+folder+'relation_matrix_node'+str(node_number)+'_edge'+str(edge_number)+'.csv'
+                true_structure = np.loadtxt(matrix_path, delimiter=',')
+                sid = SID(true_structure,result)
+                aupr_re,aupr_curve = precision_recall(true_structure,result)
+                print(sid,aupr_re)
+ 

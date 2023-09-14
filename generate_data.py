@@ -49,22 +49,6 @@ def generate_nonlinear_Gau(S,N,edge,top_sort,relation_matrix,i):
     #save_path = './'+str(i)+'/generate_nonlinear_Gau_node'+str(N)+'_edge'+str(edge)+'.csv'
     #np.savetxt(save_path,samples,delimiter=',')
     
-#Sigmoid Mix generator
-def generate_sig_Gau(S,N,edge,top_sort,relation_matrix,i):
-    samples = []
-    for t in range(S):
-        x_vector = np.zeros(N)
-        for j in range(relation_matrix.shape[0]):
-            x_2 = np.sum(np.dot(relation_matrix[:,top_sort[j]],x_vector.T))+np.random.normal(0,1)
-            a = np.random.exponential(scale=2)+1
-            random_num = np.random.randint(0,2)
-            b = random_num*np.random.uniform(-2,-0.5)+(1-random_num)*np.random.uniform(-2,-0.5)
-            c = np.random.uniform(-2,2)
-            x_vector[top_sort[j]] = a*b(x_2+c)/(1+np.abs(b*(x_2+c)))
-        samples.append(x_vector)
-    save_path = './'+str(i)+'/generate_sig_Gau_node'+str(N)+'_edge'+str(edge)+'.csv'
-    np.savetxt(save_path,samples,delimiter=',')
-
 
 #Abs generator
 def generate_abs_Gau(S,N,edge,top_sort,relation_matrix,i):
@@ -117,6 +101,7 @@ if __name__ == "__main__":
 
     N = [10] #define the number of features
     edges = [40] #define the number of edges on dag
+    s_number = [400]
     for i in range(10):
         os.mkdir('./'+str(i))
         for node_number,edge_number,S in zip(N,edges,s_number):
@@ -128,4 +113,4 @@ if __name__ == "__main__":
             save_path = './'+str(i)+'/relation_matrix_node'+str(node_number)+'_edge'+str(edge_number)+'.csv'
             np.savetxt(save_path,relation_matrix,delimiter=',')
 
-            generate_sig_Gau(S,node_number,edge_number,top_sort,relation_matrix,i)
+            generate_abs_Gau(S,node_number,edge_number,top_sort,relation_matrix,i)
