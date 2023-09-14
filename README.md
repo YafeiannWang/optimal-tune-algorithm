@@ -2,6 +2,7 @@
  we develop a two-phase algorithm namely optimal-tuning (OT) algorithm to locally amend the global optimization. In the optimal phase, an optimization problem based on first-order Hilbert-Schmidt independence criterion (HSIC) gives an estimated skeleton as the initial determined parents subset. In the tuning phase, the skeleton is locally tuned by deletion, addition and DAG-formalization strategies using the theoretically proved incremental properties of high-order HSIC.
 ### Requires
 tensorflow 1.15.1
+
 networkx 2.6.3
 ### Running the tests
 Clone the package.
