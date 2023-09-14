@@ -4,6 +4,8 @@
 tensorflow 1.15.1
 
 networkx 2.6.3
+
+cdt 0.6.0
 ### Running the tests
 Clone the package.
 
@@ -12,7 +14,5 @@ Clone the package.
 Run the generate_data.py file for generating sythetic data.
 
 Run the OT.py file for learning the estimated graph.
-
-Run the metrics.py file for estimating the estimated graph by SID and AuPR indicators.
 ### Publication
 Wang Y, Liu J. Learning nonparametric DAGs with incremental information via high-order HSIC[J]. arXiv preprint arXiv:2308.05969, 2023.
